@@ -1,7 +1,7 @@
 {#cat1}
 
 
-<div id="pictures"  class="pictS">
+<div id="pictures" class="pictS">
     <img src="/files/q.jpg" alt="аниме_девочка1" width="236" height="325" onclick="increacse(this,0)">
     <img src="/files/r.jpg" alt="аниме_девочка2" width="236" height="325" onclick="increacse(this,1)">
     <img src="/files/w.jpg" alt="аниме_девочка3" width="236" height="325" onclick="increacse(this,2)">
@@ -9,23 +9,19 @@
 
 
 <div class="mainFlex" id="mainFlex" style="display: none;">
+
     <div class="back"> </div>
 
+    <div class="prev" onclick="prev()"></div>
 
-
-    <div class="prev" onclick="prev()">
-        
-
-    </div>
-
-    <div class="pict" onclick="clos(this)" class="font">
-        <img src="" alt="" id="fullsk">
+    <div class="pict" class="font" style="position: relative;">
+        <div class="knopka" onclick="full(this)" style="position: absolute;"> </div>
+        <img src="" alt="" id="fullsk" onclick="clos(this)">
         <h1 id="icon" class="descp"> </h1>
+
     </div>
 
-    <div class="next" onclick="next()">
-        
-    </div>
+    <div class="next" onclick="next()"></div>
 </div>
 
 <style>
@@ -34,43 +30,51 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-
-
         width: 100%;
         height: 100vh;
-
-
         position: fixed;
         top: 0;
         left: 0;
     }
-.pictS img{
 
-cursor: pointer;
-}
+    .pictS img {
+
+        cursor: pointer;
+    }
+
     .prev {
-        /* border: rgb(255, 0, 0) solid 1px; */
         height: 100vh;
         width: 20vh;
         cursor: pointer;
-        background: linear-gradient(to left,  grey, black ) ;
+        background: linear-gradient(to left, grey, black);
         opacity: 50%;
 
     }
 
+    .knopka {
+        cursor: pointer;
+        top: 10px;
+        left: 10px;
+        background-color: blue;
+        height: 20px;
+        width: 20px;
+        z-index: 10;
+    }
+
+    .knopka:hover {
+        background: green;
+    }
+
     .pict img {
-        /* border: blue solid 1px; */
         height: 80vh;
         cursor: pointer;
-
     }
 
     .next {
-        /* border: green solid 1px; */
         height: 100vh;
         width: 20vh;
         cursor: pointer;
-        background: linear-gradient(to right,  grey, black ) ;
+        background: linear-gradient(to right, grey, black);
         opacity: 50%;
 
     }
@@ -83,19 +87,22 @@ cursor: pointer;
         position: fixed;
         z-index: -10;
     }
-     .descp {
-font-family: 'Times New Roman', Times, serif;
-font-size: 40px;
-color: blueviolet;
-text-align: center;
+
+    .descp {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 40px;
+        color: blueviolet;
+        text-align: center;
 
 
-     }
+    }
 </style>
 
 
 
 <script>
+
+
     var Photo = document.querySelectorAll('#pictures >img');
     //запись всех src в отдельный массив
     var srcArray = [];
@@ -117,12 +124,16 @@ text-align: center;
     var icon = document.getElementById('icon');
     var mainFlex = document.getElementById('mainFlex')
 
+    function full() {
+        imgg.requestFullscreen();
+    }
+
 
     function increacse(img, el) {
         index = el;
         mainFlex.style.display = "";
         imgg.src = srcArray[index];
-icon.innerHTML = altArray[index];
+        icon.innerHTML = altArray[index];
     }
 
     function next() {
@@ -134,17 +145,17 @@ icon.innerHTML = altArray[index];
             imgg.src = srcArray[index];
             icon.innerHTML = altArray[index];
         }
-        
+
     }
 
     function prev() {
-        
+
         index--;
         imgg.src = srcArray[index];
         icon.innerHTML = altArray[index];
-        
+
         if (index < 0) {
-            index = len ;
+            index = len;
             imgg.src = srcArray[index];
             icon.innerHTML = altArray[index];
         }
@@ -155,4 +166,11 @@ icon.innerHTML = altArray[index];
     function clos(el) {
         mainFlex.style.display = "none";
     }
+    document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    if (evt.keyCode == 27) {
+        mainFlex.style.display = "none";
+    }
+};
+
 </script>
